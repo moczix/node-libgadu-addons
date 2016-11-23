@@ -14,9 +14,14 @@
     "gadugadu"
   ],
   "author": "moczniak",
+  "email" : "moczniak@gmail.com",
   "license": "ISC",
   "gypfile": true,
   "devDependencies": {
     "nan": "^2.4.0"
+  }
+  "repository": {
+	"type" : "git",
+	"url" : "https://moczniak@bitbucket.org/moczniak/node-libgadu-addons-js-ts.git"
   }
 }
