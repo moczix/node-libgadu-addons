@@ -3,7 +3,7 @@
     {
       "target_name": "gadu",
       "sources": [ "src/gadu.cc", "src/session.cc"],
-	  "libraries": [ "-lgadu" ],
+	  "libraries": [ "/usr/local/lib/libgadu.a" ],
 		"include_dirs" : [
 			"<!(node -e \"require('nan')\")"
 		]

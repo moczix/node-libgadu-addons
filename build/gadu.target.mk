@@ -15,12 +15,11 @@ DEFS_Debug := \
 
 # Flags passed to all source files.
 CFLAGS_Debug := \
-	-fPIC \
 	-pthread \
 	-Wall \
 	-Wextra \
 	-Wno-unused-parameter \
-	-m64 \
+	-m32 \
 	-g \
 	-O0
 
@@ -34,11 +33,11 @@ CFLAGS_CC_Debug := \
 	-std=gnu++0x
 
 INCS_Debug := \
-	-I/root/.node-gyp/7.1.0/include/node \
-	-I/root/.node-gyp/7.1.0/src \
-	-I/root/.node-gyp/7.1.0/deps/uv/include \
-	-I/root/.node-gyp/7.1.0/deps/v8/include \
-	-I$(srcdir)/../node_modules/nan
+	-I/root/.node-gyp/7.2.0/include/node \
+	-I/root/.node-gyp/7.2.0/src \
+	-I/root/.node-gyp/7.2.0/deps/uv/include \
+	-I/root/.node-gyp/7.2.0/deps/v8/include \
+	-I$(srcdir)/node_modules/nan
 
 DEFS_Release := \
 	'-DNODE_GYP_MODULE_NAME=gadu' \
@@ -51,12 +50,11 @@ DEFS_Release := \
 
 # Flags passed to all source files.
 CFLAGS_Release := \
-	-fPIC \
 	-pthread \
 	-Wall \
 	-Wextra \
 	-Wno-unused-parameter \
-	-m64 \
+	-m32 \
 	-O3 \
 	-fno-omit-frame-pointer
 
@@ -70,11 +68,11 @@ CFLAGS_CC_Release := \
 	-std=gnu++0x
 
 INCS_Release := \
-	-I/root/.node-gyp/7.1.0/include/node \
-	-I/root/.node-gyp/7.1.0/src \
-	-I/root/.node-gyp/7.1.0/deps/uv/include \
-	-I/root/.node-gyp/7.1.0/deps/v8/include \
-	-I$(srcdir)/../node_modules/nan
+	-I/root/.node-gyp/7.2.0/include/node \
+	-I/root/.node-gyp/7.2.0/src \
+	-I/root/.node-gyp/7.2.0/deps/uv/include \
+	-I/root/.node-gyp/7.2.0/deps/v8/include \
+	-I$(srcdir)/node_modules/nan
 
 OBJS := \
 	$(obj).target/$(TARGET)/src/gadu.o \
@@ -107,15 +105,15 @@ $(obj).$(TOOLSET)/$(TARGET)/%.o: $(obj)/%.cc FORCE_DO_CMD
 LDFLAGS_Debug := \
 	-pthread \
 	-rdynamic \
-	-m64
+	-m32
 
 LDFLAGS_Release := \
 	-pthread \
 	-rdynamic \
-	-m64
+	-m32
 
 LIBS := \
-	-lgadu
+	/usr/local/lib/libgadu.a
 
 $(obj).target/gadu.node: GYP_LDFLAGS := $(LDFLAGS_$(BUILDTYPE))
 $(obj).target/gadu.node: LIBS := $(LIBS)

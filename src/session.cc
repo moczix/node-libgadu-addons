@@ -201,7 +201,18 @@ void Session::ContactsRequest(const Nan::FunctionCallbackInfo<v8::Value>& info) 
 	Session* obj = ObjectWrap::Unwrap<Session>(info.Holder());
 	v8::Local<v8::Function> callback = info[0].As<v8::Function>();
 	const unsigned callback_argc = 1;
-  
+	
+	if(gg_userlist_request(obj->session_, GG_USERLIST_GET, NULL) == 0) {
+		v8::Local<v8::Value> callback_response[callback_argc] = { Nan::New(true) };
+		Nan::MakeCallback(Nan::GetCurrentContext()->Global(), callback, callback_argc, callback_response);
+		return;
+	}else {
+		const char * error = strerror(errno);
+		v8::Local<v8::Value> callback_response[callback_argc] = { Nan::New(error).ToLocalChecked() };
+		Nan::MakeCallback(Nan::GetCurrentContext()->Global(), callback, callback_argc, callback_response);
+		return;
+	}
+	/*
 	if(gg_userlist100_request(obj->session_, GG_USERLIST100_GET, 0, GG_USERLIST100_FORMAT_TYPE_GG70, NULL) == 0) {
 		v8::Local<v8::Value> callback_response[callback_argc] = { Nan::New(true) };
 		Nan::MakeCallback(Nan::GetCurrentContext()->Global(), callback, callback_argc, callback_response);
@@ -212,7 +223,9 @@ void Session::ContactsRequest(const Nan::FunctionCallbackInfo<v8::Value>& info) 
 		Nan::MakeCallback(Nan::GetCurrentContext()->Global(), callback, callback_argc, callback_response);
 		return;
 	}
+	*/
 }
+
 
 
 void Session::Notify(const Nan::FunctionCallbackInfo<v8::Value>& info) {
@@ -408,11 +421,18 @@ void Session::CheckEvents(const Nan::FunctionCallbackInfo<v8::Value>& info) {
 			
 			break;
 		}
-		case GG_EVENT_USERLIST100_REPLY: {
+		case GG_EVENT_USERLIST100_REPLY: { //nie dziala bez apt-get install libgadu3
 			objectResponse->Set(Nan::New("error").ToLocalChecked(), Nan::Null());
 			objectResponse->Set(Nan::New("type").ToLocalChecked(), Nan::New("receiveContacts").ToLocalChecked());
 			objectResponse->Set(Nan::New("contacts").ToLocalChecked(), Nan::New(e->event.userlist100_reply.reply).ToLocalChecked());
 			objectResponse->Set(Nan::New("version").ToLocalChecked(), Nan::New(e->event.userlist100_reply.version));
+			break;
+		}
+		case GG_EVENT_USERLIST: {
+			objectResponse->Set(Nan::New("error").ToLocalChecked(), Nan::Null());
+			objectResponse->Set(Nan::New("type").ToLocalChecked(), Nan::New("receiveContacts").ToLocalChecked());
+			objectResponse->Set(Nan::New("contacts").ToLocalChecked(), Nan::New(e->event.userlist.reply).ToLocalChecked());
+		//	objectResponse->Set(Nan::New("version").ToLocalChecked(), Nan::New(e->event.userlist.version));
 			break;
 		}
 		case GG_EVENT_NONE: {

@@ -4,8 +4,14 @@
   "description": "libgadu library for node javascript or typescript",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "install": "node-gyp rebuild"
+    "preinstall": "npm install node-pre-gyp",
+    "install": "node-pre-gyp install --fallback-to-build",
+	"test": "node index.js"
+  },
+  "binary": {
+    "module_name": "gadu",
+    "module_path": "./build/Release/",
+    "host": ""
   },
   "keywords": [
     "libgadu",
@@ -14,14 +20,18 @@
     "gadugadu"
   ],
   "author": "moczniak",
-  "email" : "moczniak@gmail.com",
+  "email": "moczniak@gmail.com",
   "license": "ISC",
   "gypfile": true,
   "devDependencies": {
-    "nan": "^2.4.0"
-  }
+    "aws-sdk": "^2.7.7"
+  },
+  "dependencies": {
+    "nan": "^2.4.0",
+    "node-pre-gyp": "^0.6.31"
+  },
   "repository": {
-	"type" : "git",
-	"url" : "https://moczniak@bitbucket.org/moczniak/node-libgadu-addons-js-ts.git"
+    "type": "git",
+    "url": "https://moczniak@bitbucket.org/moczniak/node-libgadu-addons-js-ts.git"
   }
 }
