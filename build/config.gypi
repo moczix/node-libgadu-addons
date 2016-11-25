@@ -13,7 +13,7 @@
     "debug_devtools": "node",
     "force_dynamic_crt": 0,
     "gas_version": "2.25",
-    "host_arch": "ia32",
+    "host_arch": "x64",
     "icu_data_file": "icudt57l.dat",
     "icu_data_in": "../../deps/icu/source/data/in/icudt57l.dat",
     "icu_endianness": "l",
@@ -47,7 +47,7 @@
     "openssl_fips": "",
     "openssl_no_asm": 0,
     "shlib_suffix": "so.51",
-    "target_arch": "ia32",
+    "target_arch": "x64",
     "uv_parent_path": "/deps/uv/",
     "uv_use_dtrace": "false",
     "v8_enable_gdbjit": 0,
@@ -61,9 +61,6 @@
     "want_separate_host_toolset_mkpeephole": 0,
     "nodedir": "/root/.node-gyp/7.2.0",
     "copy_dev_lib": "true",
-    "standalone_static_library": 1,
-    "module": "/var/www/mygadu2/gadu/build/Release/gadu.node",
-    "module_name": "gadu",
-    "module_path": "/var/www/mygadu2/gadu/build/Release"
+    "standalone_static_library": 1
   }
 }

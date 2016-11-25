@@ -15,11 +15,12 @@ DEFS_Debug := \
 
 # Flags passed to all source files.
 CFLAGS_Debug := \
+	-fPIC \
 	-pthread \
 	-Wall \
 	-Wextra \
 	-Wno-unused-parameter \
-	-m32 \
+	-m64 \
 	-g \
 	-O0
 
@@ -50,11 +51,12 @@ DEFS_Release := \
 
 # Flags passed to all source files.
 CFLAGS_Release := \
+	-fPIC \
 	-pthread \
 	-Wall \
 	-Wextra \
 	-Wno-unused-parameter \
-	-m32 \
+	-m64 \
 	-O3 \
 	-fno-omit-frame-pointer
 
@@ -105,15 +107,15 @@ $(obj).$(TOOLSET)/$(TARGET)/%.o: $(obj)/%.cc FORCE_DO_CMD
 LDFLAGS_Debug := \
 	-pthread \
 	-rdynamic \
-	-m32
+	-m64
 
 LDFLAGS_Release := \
 	-pthread \
 	-rdynamic \
-	-m32
+	-m64
 
 LIBS := \
-	/usr/local/lib/libgadu.a
+	-lgadu
 
 $(obj).target/gadu.node: GYP_LDFLAGS := $(LDFLAGS_$(BUILDTYPE))
 $(obj).target/gadu.node: LIBS := $(LIBS)
