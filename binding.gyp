@@ -5,7 +5,10 @@
       "sources": [ "src/<(module_name).cc" ],
       "dependencies": [
         "deps/gadu.gyp:gadu"
-      ]
+      ],
+		"include_dirs" : [
+			"<!(node -e \"require('nan')\")"
+		]
     },
     {
       "target_name": "action_after_build",

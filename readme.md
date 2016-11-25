@@ -5,7 +5,7 @@ Node GaduGadu library for javascript and typescript.
 
 ### Installation
 
-``npm install git+ssh://git@bitbucket.org/moczniak/node-libgadu-addons-js-ts.git``
+``npm install git+ssh://git@bitbucket.org/moczniak/node-libgadu-addons-js-ts.git#prebinary-test``
 
 
 ### GaduGadu Statuses
