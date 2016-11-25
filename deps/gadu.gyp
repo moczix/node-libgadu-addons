@@ -4,6 +4,7 @@
             "target_name": "gadu",
             "product_name": "gadu",
             "type": "shared_library",
+			"libraries": [ "-lgadu" ],
             "sources": [
                 "./../src/session.cc"
             ],
