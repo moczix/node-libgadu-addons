@@ -24,14 +24,14 @@
           ['OS == "win"', {
              "copies": [
                {
-                "files": [ "<(PRODUCT_DIR)/mylib<(SHARED_LIB_SUFFIX)" ],
+                "files": [ "<(PRODUCT_DIR)/gadu<(SHARED_LIB_SUFFIX)" ],
                 "destination": "<(module_path)/"
                }
              ]
           }, {
              "copies": [
                {
-                "files": [ "<(PRODUCT_DIR)/mylib<(SHARED_LIB_SUFFIX)" ],
+                "files": [ "<(PRODUCT_DIR)/gadu<(SHARED_LIB_SUFFIX)" ],
                 "destination": "<(module_path)/lib.target/"
                }
              ]
