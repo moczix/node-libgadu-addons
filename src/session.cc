@@ -69,7 +69,7 @@ void Session::Login(const Nan::FunctionCallbackInfo<v8::Value>& info) {
 	gg.protocol_features = GG_FEATURE_DND_FFC | GG_FEATURE_IMAGE_DESCR | GG_FEATURE_ALL | GG_FEATURE_MULTILOGON;
 	gg.encoding = GG_ENCODING_UTF8;
 	
-	// gg_debug_level = 255;
+	gg_debug_level = 255;
 	// gg.async = 1;
 	struct ::gg_session * sess = ::gg_login(&gg);
 	if (!sess) {

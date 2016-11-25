@@ -4,14 +4,7 @@
   "description": "libgadu library for node javascript or typescript",
   "main": "index.js",
   "scripts": {
-    "preinstall": "npm install node-pre-gyp",
-    "install": "node-pre-gyp install --fallback-to-build",
 	"test": "node index.js"
-  },
-  "binary": {
-    "module_name": "gadu",
-    "module_path": "./build/Release/",
-    "host": ""
   },
   "keywords": [
     "libgadu",
@@ -23,12 +16,8 @@
   "email": "moczniak@gmail.com",
   "license": "ISC",
   "gypfile": true,
-  "devDependencies": {
-    "aws-sdk": "^2.7.7"
-  },
   "dependencies": {
-    "nan": "^2.4.0",
-    "node-pre-gyp": "^0.6.31"
+    "nan": "^2.4.0"
   },
   "repository": {
     "type": "git",
