@@ -2,7 +2,7 @@
 #define SESSION_H
 
 #include <nan.h>
-#include "libgadu.h"
+#include <libgadu/libgadu.h>
 
 
 class Session : public Nan::ObjectWrap {
