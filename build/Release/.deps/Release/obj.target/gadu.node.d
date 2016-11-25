@@ -1,1 +1,0 @@
-cmd_Release/obj.target/gadu.node := g++ -shared -pthread -rdynamic -m64  -Wl,-soname=gadu.node -o Release/obj.target/gadu.node -Wl,--start-group Release/obj.target/gadu/src/gadu.o Release/obj.target/gadu/src/session.o -Wl,--end-group -L/var/www/mygadu2/gadu/src/libgadu/lib -lgadu
