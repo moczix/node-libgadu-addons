@@ -1,0 +1,13 @@
+prefix=/var/www/libgaduCOMPILED
+exec_prefix=${prefix}
+libdir=${exec_prefix}/lib
+includedir=${prefix}/include
+
+Name: libgadu
+Version: 1.12.1
+Description: libgadu
+Requires.private: 
+Libs: -L${libdir} -lgadu
+Libs.private:  -pthread 
+Cflags: -I${includedir}
+
