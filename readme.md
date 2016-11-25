@@ -3,6 +3,11 @@
 ### Description
 Node GaduGadu library for javascript and typescript.
 
+### Installation
+
+npm install git+ssh://git@bitbucket.org/moczniak/node-libgadu-addons-js-ts.git
+
+
 ### GaduGadu Statuses
 use one of these number to change your status:
  
