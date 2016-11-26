@@ -19,9 +19,13 @@ make
 make install 
 ```
 Then go to addon directory and open binding.gyp file in your text editor then this
+
 ``libraries": [ "/home/moczniak/my_native_libs/libgadu/lib/libgadu.so" ],``
+
 change for 
+
 ``libraries": [ "-lgadu" ],``
+
 if you install globally the lib will go to folder /usr/local/lib and you don't need absolute path about libgadu.
 
 ##### Locally
@@ -41,9 +45,10 @@ You can compile libgadu an use static version instead of shared (change .so for 
 
 #### Locally compilation
 If you compile libgadu locally you probably should add these three things to your enviroment path:
-1. ``export CPLUS_INCLUDE_PATH=/your/path/to/libgadu/include:$CPLUS_INCLUDE_PATH``
-2. ``export LD_LIBRARY_PATH=/your/path/to/libgadu/lib:$LD_LIBRARY_PATH``
-3. ``export C_INCLUDE_PATH=/your/path/to/libgadu/include:$C_INCLUDE_PATH``
+
+``export CPLUS_INCLUDE_PATH=/your/path/to/libgadu/include:$CPLUS_INCLUDE_PATH``
+``export LD_LIBRARY_PATH=/your/path/to/libgadu/lib:$LD_LIBRARY_PATH``
+``export C_INCLUDE_PATH=/your/path/to/libgadu/include:$C_INCLUDE_PATH``
 
 If you don't add it you could notice error "libgadu.h not found" at build time And "libgadu.so if not file or directory" or something like that at runtime.
 
