@@ -37,7 +37,9 @@ make install
 ```
 then go to addon directory and open binding.gyp file in your text editor then this
 ``libraries": [ "/home/moczniak/my_native_libs/libgadu/lib/libgadu.so" ],``
+
 change for 
+
 ``libraries": [ "/your/path/to/libgadu/lib/libgadu.so" ],``
 
 ##### static lib
