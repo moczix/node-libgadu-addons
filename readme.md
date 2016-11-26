@@ -47,7 +47,9 @@ You can compile libgadu an use static version instead of shared (change .so for 
 If you compile libgadu locally you probably should add these three things to your enviroment path:
 
 ``export CPLUS_INCLUDE_PATH=/your/path/to/libgadu/include:$CPLUS_INCLUDE_PATH``
+
 ``export LD_LIBRARY_PATH=/your/path/to/libgadu/lib:$LD_LIBRARY_PATH``
+
 ``export C_INCLUDE_PATH=/your/path/to/libgadu/include:$C_INCLUDE_PATH``
 
 If you don't add it you could notice error "libgadu.h not found" at build time And "libgadu.so if not file or directory" or something like that at runtime.
