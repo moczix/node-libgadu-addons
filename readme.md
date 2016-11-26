@@ -45,7 +45,7 @@ change for
 ##### static lib
 You can compile libgadu an use static version instead of shared (change .so for .a) but i notice that in my case it only worked on x32 OS.
 
-#### Locally compilation
+##### Locally compilation
 If you compile libgadu locally you probably should add these three things to your enviroment path:
 
 ``export CPLUS_INCLUDE_PATH=/your/path/to/libgadu/include:$CPLUS_INCLUDE_PATH``
