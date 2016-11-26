@@ -3,10 +3,62 @@
 ### Description
 Node GaduGadu library for javascript and typescript.
 
-### Installation
+### Installation Linux
+##### Requirements
+* libgadu 1.12.1 (http://libgadu.net/)
+##### Get repo
+``git clone https://moczniak@bitbucket.org/moczniak/node-libgadu-addons-js-ts.git``
+##### Compile libgadu
+You can compile libgadu globally or localy, if you want to use it on hosting choose localy
 
-``npm install git+ssh://git@bitbucket.org/moczniak/node-libgadu-addons-js-ts.git``
+##### Globally
+go to libgadu directory in terminal and then:
+```
+sh ./configure
+make
+make install 
+```
+Then go to addon directory and open binding.gyp file in your text editor then this
+``libraries": [ "/home/moczniak/my_native_libs/libgadu/lib/libgadu.so" ],``
+change for 
+``libraries": [ "-lgadu" ],``
+if you install globally the lib will go to folder /usr/local/lib and you don't need absolute path about libgadu.
 
+##### Locally
+go to libgadu directory in terminal and then:
+```
+sh ./configure --prefix=/your/path/to/libgadu
+make
+make install
+```
+then go to addon directory and open binding.gyp file in your text editor then this
+``libraries": [ "/home/moczniak/my_native_libs/libgadu/lib/libgadu.so" ],``
+change for 
+``libraries": [ "/your/path/to/libgadu/lib/libgadu.so" ],``
+
+##### static lib
+You can compile libgadu an use static version instead of shared (change .so for .a) but i notice that in my case it only worked on x32 OS.
+
+#### Locally compilation
+If you compile libgadu locally you probably should add these three things to your enviroment path:
+1. ``export CPLUS_INCLUDE_PATH=/your/path/to/libgadu/include:$CPLUS_INCLUDE_PATH``
+2. ``export LD_LIBRARY_PATH=/your/path/to/libgadu/lib:$LD_LIBRARY_PATH``
+3. ``export C_INCLUDE_PATH=/your/path/to/libgadu/include:$C_INCLUDE_PATH``
+
+If you don't add it you could notice error "libgadu.h not found" at build time And "libgadu.so if not file or directory" or something like that at runtime.
+
+##### Build Addon
+in addon directory use *npm install* and if you have node-gyp installed globally you can use it *node-gyp clean configure build* or just run build.js *node build.js*
+
+##### Test Addon
+if you have no errors at build time, just check the test.js *node test.js* you should see *wrong login and password" 
+
+##### How to use this addon?
+You can just require it like that 
+``const GaduGadu = require('./node-libgadu-addons-js-ts');``
+or install it to your node_modules
+``npm install ./node-libgadu-addons-js-ts``
+and require it just like any npm package
 
 ### GaduGadu Statuses
 use one of these number to change your status:
@@ -40,6 +92,13 @@ myGG.login(gg_number, 'gg password');
 
 #### Methods
 You can use this methods inside *connected event* or outside, it's depends on you but i preffer the inside way.
+
+##### Debug (default: disabled)
+```
+myGG.debug(true); // enable debbuging
+myGG.debug(false); // disable debbuging
+```
+
 
 ##### Get contacts
 ```
@@ -96,3 +155,11 @@ myGG.event.on('error', (err) => { });
 ```
 ## Typescript usage
 *soon* 
+
+
+
+
+
+
+## Issues
+If you nottice error "segmentation fault" after use *contactsRequest* then you should use *contactsRequest_old* method and should be all right!

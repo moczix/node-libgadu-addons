@@ -4,7 +4,7 @@
   "description": "libgadu library for node javascript or typescript",
   "main": "index.js",
   "scripts": {
-	"test": "node index.js"
+    "test": "node index.js"
   },
   "keywords": [
     "libgadu",
@@ -17,7 +17,8 @@
   "license": "ISC",
   "gypfile": true,
   "dependencies": {
-    "nan": "^2.4.0"
+    "nan": "^2.4.0",
+    "node-gyp": "^3.4.0"
   },
   "repository": {
     "type": "git",

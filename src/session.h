@@ -27,6 +27,8 @@ class Session : public Nan::ObjectWrap {
 	static void ChangeStatus(const Nan::FunctionCallbackInfo<v8::Value>& info);
 	static void Logout(const Nan::FunctionCallbackInfo<v8::Value>& info);
 	static void ContactsRequest(const Nan::FunctionCallbackInfo<v8::Value>& info);
+	static void ContactsRequest_OLD(const Nan::FunctionCallbackInfo<v8::Value>& info);
+	static void Debug(const Nan::FunctionCallbackInfo<v8::Value>& info);
 	
 	static int getStatusNumber(int status);
 	

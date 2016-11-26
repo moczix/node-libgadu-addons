@@ -1,11 +1,13 @@
-const Gadu = require('./build/Release/gadu');
+const GaduGadu = require('./index');
 
-this.libgadu = new Gadu.Session();
-
-this.libgadu.login(8203225, 'akapulko', (status) => {
-	if (status === true) {
-		console.log('login true');
-	}else {
-		console.log('login false');
-	}
+let myGG = new GaduGadu();
+myGG.debug(true);
+myGG.event.on('connected', () => {
+	console.log('connected');
 });
+myGG.event.on('notConnected', () => {
+	console.log('wrong login and password');
+});
+
+
+myGG.login(8203225, 'akapulkoo');

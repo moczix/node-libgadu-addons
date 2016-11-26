@@ -27,7 +27,8 @@ void Session::Init(v8::Local<v8::Object> exports) {
   Nan::SetPrototypeMethod(tpl, "changeStatus", ChangeStatus);
   Nan::SetPrototypeMethod(tpl, "logout", Logout);
   Nan::SetPrototypeMethod(tpl, "contactsRequest", ContactsRequest);
-  
+  Nan::SetPrototypeMethod(tpl, "contactsRequest_old", ContactsRequest_OLD);
+  Nan::SetPrototypeMethod(tpl, "debug", Debug);
   
 
   constructor.Reset(tpl->GetFunction());
@@ -50,6 +51,16 @@ void Session::New(const Nan::FunctionCallbackInfo<v8::Value>& info) {
 }
 
 
+void Session::Debug(const Nan::FunctionCallbackInfo<v8::Value>& info) {
+  Session* obj = ObjectWrap::Unwrap<Session>(info.Holder());
+  
+  if (info[0]->BooleanValue() == true) {
+	gg_debug_level = 255;
+  }else {
+	gg_debug_level = 0; 
+  }
+}
+
 
 void Session::Login(const Nan::FunctionCallbackInfo<v8::Value>& info) {
   Session* obj = ObjectWrap::Unwrap<Session>(info.Holder());
@@ -69,7 +80,7 @@ void Session::Login(const Nan::FunctionCallbackInfo<v8::Value>& info) {
 	gg.protocol_features = GG_FEATURE_DND_FFC | GG_FEATURE_IMAGE_DESCR | GG_FEATURE_ALL | GG_FEATURE_MULTILOGON;
 	gg.encoding = GG_ENCODING_UTF8;
 	
-	gg_debug_level = 255;
+	// gg_debug_level = 255;
 	// gg.async = 1;
 	struct ::gg_session * sess = ::gg_login(&gg);
 	if (!sess) {
@@ -77,6 +88,7 @@ void Session::Login(const Nan::FunctionCallbackInfo<v8::Value>& info) {
 		v8::Local<v8::Value> callback_response[callback_argc] = { Nan::New(false) };
 		Nan::MakeCallback(Nan::GetCurrentContext()->Global(), callback, callback_argc, callback_response);
 	}else {
+		gg_notify(sess, NULL, 0);
 		obj->session_ = sess;
 		v8::Local<v8::Value> callback_response[callback_argc] = { Nan::New(true) };
 		Nan::MakeCallback(Nan::GetCurrentContext()->Global(), callback, callback_argc, callback_response);
@@ -197,11 +209,10 @@ void Session::Ping(const Nan::FunctionCallbackInfo<v8::Value>& info) {
 	}
 }
 
-void Session::ContactsRequest(const Nan::FunctionCallbackInfo<v8::Value>& info) {
+void Session::ContactsRequest_OLD(const Nan::FunctionCallbackInfo<v8::Value>& info) {
 	Session* obj = ObjectWrap::Unwrap<Session>(info.Holder());
 	v8::Local<v8::Function> callback = info[0].As<v8::Function>();
 	const unsigned callback_argc = 1;
-	
 	if(gg_userlist_request(obj->session_, GG_USERLIST_GET, NULL) == 0) {
 		v8::Local<v8::Value> callback_response[callback_argc] = { Nan::New(true) };
 		Nan::MakeCallback(Nan::GetCurrentContext()->Global(), callback, callback_argc, callback_response);
@@ -212,7 +223,12 @@ void Session::ContactsRequest(const Nan::FunctionCallbackInfo<v8::Value>& info) 
 		Nan::MakeCallback(Nan::GetCurrentContext()->Global(), callback, callback_argc, callback_response);
 		return;
 	}
-	/*
+}
+
+void Session::ContactsRequest(const Nan::FunctionCallbackInfo<v8::Value>& info) {
+	Session* obj = ObjectWrap::Unwrap<Session>(info.Holder());
+	v8::Local<v8::Function> callback = info[0].As<v8::Function>();
+	const unsigned callback_argc = 1;
 	if(gg_userlist100_request(obj->session_, GG_USERLIST100_GET, 0, GG_USERLIST100_FORMAT_TYPE_GG70, NULL) == 0) {
 		v8::Local<v8::Value> callback_response[callback_argc] = { Nan::New(true) };
 		Nan::MakeCallback(Nan::GetCurrentContext()->Global(), callback, callback_argc, callback_response);
@@ -223,7 +239,7 @@ void Session::ContactsRequest(const Nan::FunctionCallbackInfo<v8::Value>& info) 
 		Nan::MakeCallback(Nan::GetCurrentContext()->Global(), callback, callback_argc, callback_response);
 		return;
 	}
-	*/
+	
 }
 
 
@@ -398,8 +414,7 @@ void Session::CheckEvents(const Nan::FunctionCallbackInfo<v8::Value>& info) {
 			objectResponse->Set(Nan::New("type").ToLocalChecked(), Nan::New("statusChangedMulti").ToLocalChecked());
 			
 			v8::Local<v8::Array> statuses = Nan::New<v8::Array>();
-			
-			for (int i=0 ; e->event.notify60[i].uin != NULL ; i++) {
+			for (int i=0 ; e->event.notify60[i].uin != 0 ; i++) {
 				v8::Local<v8::Object> currentStatus = Nan::New<v8::Object>();
 				
 				currentStatus->Set(Nan::New("uin").ToLocalChecked(), Nan::New(e->event.notify60[i].uin));
@@ -416,14 +431,12 @@ void Session::CheckEvents(const Nan::FunctionCallbackInfo<v8::Value>& info) {
 				currentStatus->Set(Nan::New("time").ToLocalChecked(), Nan::New<v8::Number>(e->event.notify60[i].time));
 				statuses->Set(i, currentStatus);
 			}
-			
 			objectResponse->Set(Nan::New("statuses").ToLocalChecked(), statuses);
-			
 			break;
 		}
-		case GG_EVENT_USERLIST100_REPLY: { //nie dziala bez apt-get install libgadu3
+		case GG_EVENT_USERLIST100_REPLY: { // raz dziala a raz nie, zalezy od systemu...
 			objectResponse->Set(Nan::New("error").ToLocalChecked(), Nan::Null());
-			objectResponse->Set(Nan::New("type").ToLocalChecked(), Nan::New("receiveContacts").ToLocalChecked());
+			objectResponse->Set(Nan::New("type").ToLocalChecked(), Nan::New("receiveContacts100").ToLocalChecked());
 			objectResponse->Set(Nan::New("contacts").ToLocalChecked(), Nan::New(e->event.userlist100_reply.reply).ToLocalChecked());
 			objectResponse->Set(Nan::New("version").ToLocalChecked(), Nan::New(e->event.userlist100_reply.version));
 			break;
@@ -447,7 +460,6 @@ void Session::CheckEvents(const Nan::FunctionCallbackInfo<v8::Value>& info) {
 	gg_free_event(e);
 	callback_response[0] = objectResponse;
 	Nan::MakeCallback(Nan::GetCurrentContext()->Global(), callback, callback_argc, callback_response);
-		
 }
 
 

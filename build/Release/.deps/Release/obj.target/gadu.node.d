@@ -1,0 +1,1 @@
+cmd_Release/obj.target/gadu.node := c++ -shared -pthread -rdynamic -m64 -Wl,--export-dynamic  -Wl,-soname=gadu.node -o Release/obj.target/gadu.node -Wl,--start-group Release/obj.target/gadu/src/gadu.o Release/obj.target/gadu/src/session.o -Wl,--end-group /home/moczniak/my_native_libs/libgadu/lib/libgadu.so
